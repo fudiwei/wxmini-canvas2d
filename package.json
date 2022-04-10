@@ -1,0 +1,70 @@
+{
+    "name": "@skit/wxmini-canvas2d",
+    "title": "wxmini-canvas2d",
+    "description": "为微信小程序、小游戏的 Canvas2D 画布提供链式调用语法",
+    "keywords": [
+        "微信",
+        "小程序",
+        "微信小程序",
+        "微信小游戏",
+        "Wechat",
+        "Weixin",
+        "MicroMessager",
+        "MiniProgram",
+        "MiniGame",
+        "Wechat-MiniProgram",
+        "Wechat-MiniGame",
+        "Weixin-MiniProgram",
+        "Weixin-MiniGame",
+        "weapp",
+        "wxapp",
+        "Canvas",
+        "CanvasContext",
+        "Canvas2D",
+        "Canvas2DContext"
+    ],
+    "version": "0.0.1",
+    "main": "dist/index.min.js",
+    "author": "Fu Diwei",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fudiwei/wxmini-canvas2d.git"
+    },
+    "license": "MIT",
+    "scripts": {
+        "build": "webpack --config build/webpack.config.js"
+    },
+    "typings": "types/index.d.ts",
+    "files": [
+        "src/*",
+        "dist/*",
+        "types/*",
+        "!types/.prettierrc"
+    ],
+    "engines": {
+        "node": ">=12",
+        "npm": ">=7",
+        "pnpm": ">=6"
+    },
+    "devDependencies": {
+        "@babel/core": "7.17.9",
+        "@babel/preset-env": "^7.16.11",
+        "@babel/preset-typescript": "^7.16.7",
+        "@babel/runtime": "7.17.9",
+        "@typescript-eslint/eslint-plugin": "5.18.0",
+        "@typescript-eslint/parser": "5.18.0",
+        "babel-loader": "8.2.4",
+        "eslint": "8.12.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "event-hooks-webpack-plugin": "^2.2.0",
+        "miniprogram-api-typings": "~3.4.6",
+        "prettier": "2.6.2",
+        "typescript": "~4.6.0",
+        "webpack": "5.72.0",
+        "webpack-cli": "^4.9.2"
+    },
+    "peerDependencies": {
+        "miniprogram-api-typings": "~3.4.6"
+    }
+}
+

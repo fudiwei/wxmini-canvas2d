@@ -1,0 +1,40 @@
+﻿{
+    "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "esModuleInterop": true,
+        "importHelpers": false,
+        "isolatedModules": true,
+        "lib": [
+            "DOM",
+            "ESNext",
+            "ScriptHost"
+        ],
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "sourceMap": true,
+        "strict": true,
+        "target": "ES5",
+        "types": [
+            "miniprogram-api-typings"
+        ],
+        "typeRoots": [
+            "./node_modules/@type",
+            "./types"
+        ]
+    },
+    "include": [
+        "src/**/*.ts",
+        "tests/**/*.ts",
+        "types/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

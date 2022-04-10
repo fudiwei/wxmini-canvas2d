@@ -1,0 +1,20 @@
+{
+    "pages": [
+        "pages/home/index",
+        "pages/canvas-radar/index",
+        "pages/canvas-rectangle/index",
+        "pages/canvas-bezier/index",
+        "pages/canvas-gradient/index",
+        "pages/canvas-deformation/index",
+        "pages/canvas-roundimg/index",
+        "pages/canvas-textwrap/index"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "示例项目 @skit/wxmini-canvas2d",
+        "navigationBarTextStyle": "black"
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
+}

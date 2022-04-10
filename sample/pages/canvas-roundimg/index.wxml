@@ -1,0 +1,2 @@
+<avatar id="avatar" />
+<button class="btn" type="primary" bindtap="handleTapChooseImage">选择本地图片</button>

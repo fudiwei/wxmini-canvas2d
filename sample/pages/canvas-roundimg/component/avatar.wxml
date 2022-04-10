@@ -1,0 +1,1 @@
+<canvas type="2d" id="myCanvas" style="width: 100px; height: 100px" bindlongpress="onLongPress"></canvas>
