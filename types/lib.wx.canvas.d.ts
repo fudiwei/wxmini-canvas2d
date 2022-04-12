@@ -1,17 +1,12 @@
 ﻿declare namespace WechatMiniprogram {
-    namespace Wx {
-        type WxRenderingContextDifferentWithDOMKeys = "canvas" | "getContextAttributes" | "createPattern" | "createImageData" | "getImageData" | "putImageData" | "drawImage" | "drawFocusIfNeeded" | "measureText";
-
-        type WxNode = WechatMiniprogram.NodeCallbackResult["node"];
-    }
-
-    interface Node extends Wx.WxNode {}
-
     interface Path2D extends globalThis.Path2D {}
 
-    interface CanvasImageSource extends WechatMiniprogram.ImageData, WechatMiniprogram.Image {}
+    type CanvasImageSource = WechatMiniprogram.ImageData | WechatMiniprogram.Image;
 
-    interface RenderingContext extends Omit<globalThis.CanvasRenderingContext2D, Wx.WxRenderingContextDifferentWithDOMKeys> {
+    type Node = WechatMiniprogram.NodeCallbackResult["node"];
+
+    interface RenderingContext
+        extends Omit<globalThis.CanvasRenderingContext2D, "canvas" | "getContextAttributes" | "createPattern" | "createImageData" | "getImageData" | "putImageData" | "drawImage" | "drawFocusIfNeeded" | "measureText"> {
         readonly canvas: Canvas;
 
         createPattern(image: WechatMiniprogram.CanvasImageSource, repetition: string | null): CanvasPattern | null;
