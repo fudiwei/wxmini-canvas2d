@@ -235,7 +235,7 @@ function _calcTextWithWrapPositions (fcanvas, text, xPos, yPos, maxWidth, ...arg
     lineHeight = args.length >= 2 ? args[1] : args[0];
 
     if (isNaN(xPos)) throw 'The value of \'x\' must be a Number.';
-    if (isNaN(yPos)) throw 'The value of \'x\' must be a Number.';
+    if (isNaN(yPos)) throw 'The value of \'y\' must be a Number.';
 
     const context = fcanvas.getContext();
     const MULTI_NEWLINE_DELIMITER = '\u200b';
