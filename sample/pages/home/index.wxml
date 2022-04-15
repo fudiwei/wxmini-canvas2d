@@ -1,9 +1,9 @@
 <view class="btns">
-    <button type="primary" bindtap="handleTapSampleRadar">示例：雷达</button>
-    <button type="primary" bindtap="handleTapSampleRectangle">示例：矩形</button>
-    <button type="primary" bindtap="handleTapSampleBezier">示例：贝塞尔曲线</button>
-    <button type="primary" bindtap="handleTapSampleGradient">示例：渐变</button>
-    <button type="primary" bindtap="handleTapSampleDeformation">示例：形变</button>
-    <button type="primary" bindtap="handleTapSampleRoundImage">示例：圆形图片（自定义组件）</button>
-    <button type="primary" bindtap="handleTapSampleTextWrap">示例：多行文本自动换行</button>
+    <button type="primary" bindtap="handleTapSampleFluentRadar">FluentCanvas2D 示例：雷达</button>
+    <button type="primary" bindtap="handleTapSampleFluentRectangle">FluentCanvas2D 示例：矩形</button>
+    <button type="primary" bindtap="handleTapSampleFluentBezier">FluentCanvas2D 示例：贝塞尔曲线</button>
+    <button type="primary" bindtap="handleTapSampleFluentGradient">FluentCanvas2D 示例：渐变</button>
+    <button type="primary" bindtap="handleTapSampleFluentDeformation">FluentCanvas2D 示例：形变</button>
+    <button type="primary" bindtap="handleTapSampleFluentRoundImage">FluentCanvas2D 示例：圆形图片（自定义组件）</button>
+    <button type="primary" bindtap="handleTapSampleFluentTextWrap">FluentCanvas2D 示例：多行文本自动换行</button>
 </view>

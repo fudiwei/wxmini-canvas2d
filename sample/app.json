@@ -1,13 +1,13 @@
 {
     "pages": [
         "pages/home/index",
-        "pages/canvas-radar/index",
-        "pages/canvas-rectangle/index",
-        "pages/canvas-bezier/index",
-        "pages/canvas-gradient/index",
-        "pages/canvas-deformation/index",
-        "pages/canvas-roundimg/index",
-        "pages/canvas-textwrap/index"
+        "pages/mod-fluent-radar/index",
+        "pages/mod-fluent-rectangle/index",
+        "pages/mod-fluent-bezier/index",
+        "pages/mod-fluent-gradient/index",
+        "pages/mod-fluent-deformation/index",
+        "pages/mod-fluent-roundimage/index",
+        "pages/mod-fluent-textwrap/index"
     ],
     "window": {
         "backgroundTextStyle": "light",

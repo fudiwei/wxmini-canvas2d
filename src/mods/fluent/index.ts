@@ -1,7 +1,18 @@
-﻿class FluentCanvas2D {
-    constructor(canvas, { offscreen, selector, env, component }) {
-        if (new.target !== FluentCanvas2D)
-            throw "Class constructor 'FluentCanvas2D' cannot be invoked without 'new'.";
+﻿// @ts-nocheck
+import { selectCanvasNodeAsync } from '../../utils/selector';
+
+declare type ThisConstructorParameter1 = WechatMiniprogram.Canvas | WechatMiniprogram.OffscreenCanvas;
+declare type ThisConstructorParameter2 = { offscreen?: boolean; selector?: string; env?: any; component?: any };
+
+class FluentCanvas2D {
+    private _canvas!: WechatMiniprogram.Canvas | WechatMiniprogram.OffscreenCanvas;
+    private _context!: WechatMiniprogram.RenderingContext;
+
+    private constructor(
+        canvas: ThisConstructorParameter1,
+        { offscreen, selector, env, component }: ThisConstructorParameter2
+    ) {
+        if (new.target !== FluentCanvas2D) throw "Class constructor 'FluentCanvas2D' cannot be invoked without 'new'.";
         if (typeof canvas?.getContext !== 'function') throw 'The first argument must be a Canvas object.';
 
         this._canvas = canvas;
@@ -14,38 +25,8 @@
     }
 
     // #region 静态方法
-    static select (options = {}, callback) {
-        options = 'string' === typeof options ? { selector: options } : options;
-        options.env = options.env ?? wx;
-
-        return new Promise((resolve, reject) => {
-            if (options.offscreen) {
-                const canvas = options.env.createOffscreenCanvas({
-                    type: '2d',
-                    width: options.width,
-                    height: options.height,
-                    compInst: options.component
-                });
-                return resolve({ node: canvas });
-            }
-
-            (options.component ?? options.env)
-                .createSelectorQuery()
-                .select(options.selector)
-                .fields({
-                    node: true,
-                    size: true
-                })
-                .exec((res) => {
-                    if (!res || !res[0]) {
-                        return reject({
-                            errMsg: `Could not find any Canvas node selected by '${options.selector}'.`
-                        });
-                    }
-
-                    resolve(res[0]);
-                });
-        }).then((res) => {
+    public static select(options = {}, callback): FluentCanvas2D {
+        return selectCanvasNodeAsync(options).then((res) => {
             const canvas = res.node;
 
             let fcanvas = canvas._fcanvasRef;
@@ -70,75 +51,75 @@
     // #endregion
 
     // #region 基础方法
-    getCanvas () {
+    public getCanvas(): typeof this['_canvas'] {
         return this._canvas;
     }
 
-    getContext () {
+    public getContext(): typeof this['_context'] {
         return this._context;
     }
 
-    getWidth () {
+    public getWidth(): number {
         return this._canvas.width;
     }
 
-    getHeight () {
+    public getHeight(): number {
         return this._canvas.height;
     }
 
-    setWidth (width) {
+    public setWidth(width: number): this {
         this._canvas.width = width;
         return this;
     }
 
-    setHeight (height) {
+    public setHeight(height: number): this {
         this._canvas.height = height;
         return this;
     }
 
-    setSize ({ width, height }) {
+    public setSize({ width, height }: { width: number; height: number }): this {
         return this.setWidth(width).setHeight(height);
     }
 
-    tap (callback) {
+    public tap(callback: (fcanvas?: FluentCanvas2D) => void): this {
         callback && callback(this);
         return this;
     }
     // #endregion
 
     // #region Canvas API
-    createPath2D () {
-        return this._canvas.createPath2D();
+    public createPath2D(): WechatMiniprogram.Path2D {
+        return (<WechatMiniprogram.Canvas>this._canvas).createPath2D();
     }
 
-    createImage () {
+    public createImage(): WechatMiniprogram.Image {
         return this._canvas.createImage();
     }
 
-    createImageData (...args) {
+    public createImageData(...args: any[]): WechatMiniprogram.ImageData {
         if (args.length === 0) {
-            return this._canvas.createImageData();
+            return (<WechatMiniprogram.Canvas>this._canvas).createImageData();
         }
 
         return this._context.createImageData(...args);
     }
 
-    requestAnimationFrame (callback) {
-        return this._canvas.requestAnimationFrame(callback);
+    public requestAnimationFrame(callback?: () => void): number {
+        return (<WechatMiniprogram.Canvas>this._canvas).requestAnimationFrame(callback);
     }
 
-    cancelAnimationFrame (requestId) {
-        this._canvas.cancelAnimationFrame(requestId);
+    public cancelAnimationFrame(requestId: number): this {
+        (<WechatMiniprogram.Canvas>this._canvas).cancelAnimationFrame(requestId);
         return this;
     }
 
-    toDataURL (type, encoderOptions) {
-        return this._canvas.toDataURL(type, encoderOptions);
+    public toDataURL(type?: string, encoderOptions?: any) {
+        return (<WechatMiniprogram.Canvas>this._canvas).toDataURL(type, encoderOptions);
     }
     // #endregion
 
     // #region Canvas Context 2D API 扩展
-    rectWithRadius (x, y, w, h, r) {
+    public rectWithRadius(x: number, y: number, w: number, h: number, r: number): this {
         (x = +x), (y = +y), (w = +w), (h = +h), (r = +r);
         return this.beginPath()
             .moveTo(x + r, y)
@@ -152,15 +133,15 @@
             .arcTo(x, y, x + r, y, r);
     }
 
-    fillRectWithRadius (x, y, w, h, r) {
+    public fillRectWithRadius(x: number, y: number, w: number, h: number, r: number): this {
         return this.rectWithRadius(x, y, w, h, r).fill();
     }
 
-    strokeRectWithRadius (x, y, w, h, r) {
+    public strokeRectWithRadius(x: number, y: number, w: number, h: number, r: number): this {
         return this.rectWithRadius(x, y, w, h, r).stroke();
     }
 
-    drawImageWithRadius (...args) {
+    public drawImageWithRadius(...args: any[]): this {
         if (args.length !== 4 && args.length !== 6 && args.length !== 10)
             throw `Failed to execute \'drawImageWithRadius\' on \'FluentCanvas2D\': 10 arguments required, but only ${args.length} present.`;
 
@@ -174,7 +155,7 @@
             .restore();
     }
 
-    fillTextWithWrap (text, x, y, maxWidth, ...args) {
+    public fillTextWithWrap(text: string, x: number, y: number, maxWidth?: number, ...args: any[]): this {
         _calcTextWithWrapPositions(this, text, x, y, maxWidth, ...args).forEach((p) => {
             this.fillText(p.text, p.x, p.y);
         });
@@ -182,7 +163,7 @@
         return this;
     }
 
-    strokeTextWithWrap (text, x, y, maxWidth, ...args) {
+    public strokeTextWithWrap(text: string, x: number, y: number, maxWidth?: number, ...args: any[]): this {
         _calcTextWithWrapPositions(this, text, x, y, maxWidth, ...args).forEach((p) => {
             this.strokeText(p.text, p.x, p.y);
         });
@@ -223,19 +204,26 @@
         };
     });
 
-function _calcTextWithWrapPositions (fcanvas, text, xPos, yPos, maxWidth, ...args) {
+function _calcTextWithWrapPositions(
+    fcanvas: FluentCanvas2D,
+    text: string,
+    xPos: number,
+    yPos: number,
+    maxWidth?: number,
+    ...args: any[]
+): Array<{ text: string; x: number; y: number }> {
     let maxHeight, fontSize, textAlign, textBaseline, lineHeight;
     xPos = +xPos;
     yPos = +yPos;
     fontSize = +fcanvas.getFont().match(/\d+px/g)[0].match(/\d+/g)[0];
     textAlign = fcanvas.getTextAlign();
     textBaseline = fcanvas.getTextBaseline();
-    maxWidth = +(maxWidth ?? (fcanvas.getWidth() - xPos));
-    maxHeight = +((args.length >= 2 ? args[0] : undefined) ?? (fcanvas.getHeight() - yPos));
+    maxWidth = +(maxWidth ?? fcanvas.getWidth() - xPos);
+    maxHeight = +((args.length >= 2 ? args[0] : undefined) ?? fcanvas.getHeight() - yPos);
     lineHeight = args.length >= 2 ? args[1] : args[0];
 
-    if (isNaN(xPos)) throw 'The value of \'x\' must be a Number.';
-    if (isNaN(yPos)) throw 'The value of \'y\' must be a Number.';
+    if (isNaN(xPos)) throw "The value of 'x' must be a Number.";
+    if (isNaN(yPos)) throw "The value of 'y' must be a Number.";
 
     const context = fcanvas.getContext();
     const MULTI_NEWLINE_DELIMITER = '\u200b';
@@ -260,10 +248,11 @@ function _calcTextWithWrapPositions (fcanvas, text, xPos, yPos, maxWidth, ...arg
     }
 
     // 分词分段
-    let paragraphs = [], pTotalLines = 0;
+    let paragraphs: Array<string[]> = [],
+        pTotalLines: number = 0;
     paragraphs = text.split('\n').map((t) => {
-        const lines = [];
-        const tryAddIntoLines = (line) => {
+        const lines: typeof paragraphs[number] = [];
+        const tryAddIntoLines = (line: string) => {
             if (pTotalLines * lineHeight > maxHeight) {
                 return false;
             }
@@ -274,22 +263,20 @@ function _calcTextWithWrapPositions (fcanvas, text, xPos, yPos, maxWidth, ...arg
         };
 
         if (context.measureText(t).width <= maxWidth) {
-            if (!tryAddIntoLines(t))
-                return lines;
+            if (!tryAddIntoLines(t)) return lines;
         } else {
-            const words = Array.from(t), total = words.length;
+            const words = Array.from(t),
+                total = words.length;
 
             for (let i = 0, line = ''; i < total; i++) {
                 const str = line + words[i];
                 if (context.measureText(str).width > maxWidth) {
-                    if (!tryAddIntoLines(line))
-                        return lines;
+                    if (!tryAddIntoLines(line)) return lines;
                     line = words[i];
                 } else {
                     line = str;
                     if (i === total - 1) {
-                        if (!tryAddIntoLines(line))
-                            return lines;
+                        if (!tryAddIntoLines(line)) return lines;
                     }
                 }
             }
@@ -299,16 +286,18 @@ function _calcTextWithWrapPositions (fcanvas, text, xPos, yPos, maxWidth, ...arg
     });
 
     // 计算定位
-    let positions = [];
+    let positions: Array<{ text: string; x: number; y: number }> = [];
     for (let i = 0, num = 0; i < paragraphs.length; i++) {
         for (let j = 0; j < paragraphs[i].length; j++) {
-            let text = paragraphs[i][j], x = xPos, y = yPos;
+            let text = paragraphs[i][j],
+                x = xPos,
+                y = yPos;
 
             switch (textBaseline) {
                 case 'top':
                 case 'hanging':
                     {
-                        y = y + (num * lineHeight);
+                        y = y + num * lineHeight;
                     }
                     break;
 

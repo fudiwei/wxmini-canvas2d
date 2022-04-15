@@ -15,7 +15,7 @@ module.exports = {
 
     context: DIR_SRC,
 
-    entry: './index.js',
+    entry: './index.ts',
 
     output: {
         path: DIR_DIST,

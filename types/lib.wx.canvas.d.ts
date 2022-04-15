@@ -1,9 +1,9 @@
 ﻿declare namespace WechatMiniprogram {
-    interface Path2D extends globalThis.Path2D {}
-
     type CanvasImageSource = WechatMiniprogram.ImageData | WechatMiniprogram.Image;
 
     type Node = WechatMiniprogram.NodeCallbackResult["node"];
+
+    interface Path2D extends globalThis.Path2D {}
 
     interface RenderingContext
         extends Omit<globalThis.CanvasRenderingContext2D, "canvas" | "getContextAttributes" | "createPattern" | "createImageData" | "getImageData" | "putImageData" | "drawImage" | "drawFocusIfNeeded" | "measureText"> {
