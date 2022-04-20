@@ -23,7 +23,7 @@
         "Canvas2D",
         "Canvas2DContext"
     ],
-    "version": "0.0.2",
+    "version": "0.0.3",
     "main": "dist/index.min.js",
     "author": "Fu Diwei",
     "repository": {
