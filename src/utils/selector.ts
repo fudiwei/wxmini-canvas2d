@@ -1,4 +1,4 @@
-﻿declare type ThisParamenter = {
+﻿declare type ThisParamenterType = {
     offscreen?: boolean;
     selector?: string;
     width?: number;
@@ -9,7 +9,7 @@
 
 declare type ThisReturnType = WechatMiniprogram.NodeCallbackResult;
 
-export const selectCanvasNodeAsync = (options: ThisParamenter = {}): Promise<ThisReturnType> => {
+export const selectCanvasNodeAsync = (options: ThisParamenterType = {}): Promise<ThisReturnType> => {
     options = 'string' === typeof options ? { selector: options } : options;
     options.env = options.env ?? wx;
 
@@ -24,8 +24,12 @@ export const selectCanvasNodeAsync = (options: ThisParamenter = {}): Promise<Thi
             return resolve({ node: canvas });
         }
 
-        (options.component ?? options.env)
-            .createSelectorQuery()
+        let selectorQuery = options.env.createSelectorQuery();
+        if (!!options.component) {
+            selectorQuery = selectorQuery.in(options.component);
+        }
+
+        selectorQuery
             .select(options.selector)
             .fields({
                 node: true,
